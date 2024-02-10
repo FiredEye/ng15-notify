@@ -3,36 +3,38 @@ importScripts(
   "https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js"
 );
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCmW6Isd1XfaBOpxsp0or-mTIx0pLEijMA",
-  authDomain: "push-notify-b651d.firebaseapp.com",
-  projectId: "push-notify-b651d",
-  storageBucket: "push-notify-b651d.appspot.com",
-  messagingSenderId: "867556559896",
-  appId: "1:867556559896:web:6c58b0f6335f929377c76d"
-};
-
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
-if(firebase.messaging.isSupported()){
-  console.log('Browser supported!')
-
-  messaging.setBackgroundMessageHandler((payload) => {
-    console.log(
-      "[firebase-messaging-sw.js] Received background message ",
-      payload
-    );
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-      body: payload.notification.body,
-      icon: payload.notification.image,
-    };
+let config;
+let messaging;
+fetch('config/config.json')
+  .then(response => response.json())
+  .then(data => {
+      config = data;
+      firebase.initializeApp({
+        apiKey: config.firebaseConfig.apiKey,
+        projectId: config.firebaseConfig.projectId,
+        messagingSenderId: config.firebaseConfig.messagingSenderId,
+        appId: config.firebaseConfig.appId
+      });
+      if(firebase.messaging.isSupported()) {
+        messaging = firebase.messaging();
+        messaging.setBackgroundMessageHandler(async function (payload) {
+          console.log('[firebase-messaging-sw.js] Received background message ', payload);
+          // Customize notification here
+          let notification = payload;
+          let title = notification.data.title || '';
+          let message = notification.data.message || '';
+          const notificationTitle = title;
+          const notificationOptions = {
+              body: message,
+              icon: 'assets/icon.png',
+              data: payload.data,
+          };
   
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  });
-}else{
-  console.log('Browser not supported!')
-}
+          return self.registration.showNotification(notificationTitle,
+              notificationOptions);     
+        });
+      }
+    });
 
 
 self.addEventListener('notificationclick', function(event) {
