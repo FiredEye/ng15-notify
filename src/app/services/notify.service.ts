@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class NotifyService {
-
+showToken:any;
   constructor( private router: Router,private afMessaging: AngularFireMessaging) { }
 
   async requestnotifyPermission(){
@@ -35,7 +35,8 @@ export class NotifyService {
           localStorage['token'] = token;
           console.log(token) 
              // Save this token to server (db)
-             alert(token)
+             alert(token);
+             this.showToken=token
         // await setDoc(doc(collection(db, "devices"), newUid), {
         //   uid: newUid,
         //   deviceToken: token,

@@ -12,7 +12,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 export class AboutPage{
 
 
-  constructor(private notifyService:NotifyService){}
+  constructor(public notifyService:NotifyService){}
   requestNotification(){
     this.notifyService.requestnotifyPermission()
     }
