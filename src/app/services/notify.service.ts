@@ -3,14 +3,14 @@ import 'firebase/messaging';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 
 import { v4 as uuidv4 } from "uuid";
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore'; 
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class NotifyService {
 
-  constructor( private router: Router,private afMessaging: AngularFireMessaging,private firestore: AngularFirestore) { }
+  constructor( private router: Router,private afMessaging: AngularFireMessaging, private firestore: AngularFirestore) { }
 
   async requestnotifyPermission(){
     const permission = await Notification.requestPermission();
@@ -25,28 +25,33 @@ export class NotifyService {
       return false;
     }
   }
-  async requestAndSendToken(){
-    const permission = await Notification.requestPermission();
-    if (permission === 'granted'&&!localStorage['token']) {
-      const newUid = uuidv4();
-      this.afMessaging.requestToken.subscribe(
-       { next:(async (token) => {
-          localStorage['token'] = token;
-          console.log(token) 
-             // Save this token to server (db)
-             await this.saveTokenToFirestore(newUid, token);
-        this.router.navigate(['/about']);
-        console.log("Token stored successfully");       
-        }),
-       error:( (err) => {
-          console.error('Unable to get permission to notify.', err);
-        })})
-    } else if (permission === "denied") {
-      alert("You denied for the notification");
-    }else if (localStorage['token']) {
-      alert("Token already exist");
+  async requestAndSendToken() {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted' && !localStorage['token']) {
+        const newUid = uuidv4();
+        this.afMessaging.requestToken.subscribe({
+          next: async (token) => {
+            localStorage['token'] = token;
+            console.log(token);
+            await this.saveTokenToFirestore(newUid, token);
+            this.router.navigate(['/about']);
+            console.log("Token stored successfully");
+          },
+          error: (err) => {
+            console.error('Unable to get permission to notify.', err);
+          }
+        });
+      } else if (permission === "denied") {
+        alert("You denied for the notification");
+      } else if (localStorage['token']) {
+        alert("Token already exist");
+      }
+    } catch (error) {
+      console.error('Error requesting permission', error);
     }
   }
+
   private async saveTokenToFirestore(uid: string, token: any) {
     try {
       await this.firestore.collection('devices').doc(uid).set({
