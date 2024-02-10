@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import 'firebase/messaging';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { collection, setDoc, doc} from "firebase/firestore";
+
 import { v4 as uuidv4 } from "uuid";
-import { db } from 'src/firebase';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class NotifyService {
 
-  constructor( private router: Router,private afMessaging: AngularFireMessaging,) { }
+  constructor( private router: Router,private afMessaging: AngularFireMessaging,private firestore: AngularFirestore) { }
 
   async requestnotifyPermission(){
     const permission = await Notification.requestPermission();
@@ -34,10 +34,7 @@ export class NotifyService {
           localStorage['token'] = token;
           console.log(token) 
              // Save this token to server (db)
-        await setDoc(doc(collection(db, "devices"), newUid), {
-          uid: newUid,
-          deviceToken: token,
-        });
+             await this.saveTokenToFirestore(newUid, token);
         this.router.navigate(['/about']);
         console.log("Token stored successfully");       
         }),
@@ -50,5 +47,14 @@ export class NotifyService {
       alert("Token already exist");
     }
   }
-  
+  private async saveTokenToFirestore(uid: string, token: any) {
+    try {
+      await this.firestore.collection('devices').doc(uid).set({
+        uid: uid,
+        deviceToken: token
+      });
+    } catch (error) {
+      console.error('Error saving token to Firestore', error);
+    }
+  }
 }
