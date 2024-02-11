@@ -29,10 +29,13 @@ export class NotifyService {
   }
   async requestAndSendToken(){
     const permission = await Notification.requestPermission();
-    if (permission === 'granted'&&!localStorage['token']) {
+    if (localStorage['token']) {
+      alert("Token already exist");
+    }
+    else if (permission === 'granted') {
       const newUid = uuidv4();
       this.afMessaging.requestToken.subscribe(
-       { next:(async (token) => {
+       { next:((token) => {
           localStorage['token'] = token;
           console.log(token) 
              // Save this token to server (db)
@@ -64,8 +67,6 @@ export class NotifyService {
 
     } else if (permission === "denied") {
       alert("You denied for the notification");
-    }else if (localStorage['token']) {
-      alert("Token already exist");
     }
   }
  
