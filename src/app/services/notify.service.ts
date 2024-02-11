@@ -29,7 +29,7 @@ export class NotifyService {
   }
   async requestAndSendToken(){
     const permission = await Notification.requestPermission();
-    if (localStorage['token']!==null) {
+    if (localStorage.getItem('token')&&localStorage.getItem('token')!==null) {
       alert("Token already exist");
     }
     else if (permission === 'granted') {
