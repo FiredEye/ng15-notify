@@ -15,29 +15,19 @@ fetch('config/config.json')
           //console.log('[firebase-messaging-sw.js] Received background message ', payload);
           // Customize notification here
           let notification = payload;
-          if (notification.data.type == 'calling') {
-              const notificationTitle = 'Video assistance';
-              const notificationOptions = {
-                  body: payload.data.fromIdentity + ' is calling',
-                  icon: 'assets/psa_logo.png',
-                  data: payload.data,
-              };
-      
-              return self.registration.showNotification(notificationTitle,
-                  notificationOptions);
-          } else {
+         
               let title = notification.data.title || '';
               let message = notification.data.message || '';
               const notificationTitle = title;
               const notificationOptions = {
                   body: message,
-                  icon: 'assets/psa_logo.png',
+                  icon: 'assets/icon.png',
                   data: payload.data,
               };
       
               return self.registration.showNotification(notificationTitle,
                   notificationOptions);
-          }
+        
       
         });
       }
