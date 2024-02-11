@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import 'firebase/messaging';
+// import 'firebase/messaging';
 // import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 // import { collection, setDoc, doc} from "firebase/firestore";
