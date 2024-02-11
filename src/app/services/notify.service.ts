@@ -110,22 +110,23 @@ export class NotifyService {
       // Generate a new one and set it in localStorage
       const newUid = uuidv4();
 
-      try {
-        // Generate Token
-        const token = await getToken(messaging, {
-          vapidKey:
-            "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
-        });
-        localStorage.setItem("token", token);
-
-        console.log("Token Gen", token);
-        alert(token)
-        
-        this.router.navigate(['/about']);      
-       
-      } catch (error) {
-        console.error("Error generating or unsubscribing token:", error);
-      }
+      setTimeout(async () => {
+        try {
+          // Generate Token
+          const token = await getToken(messaging, {
+            vapidKey:
+              "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
+          });
+          localStorage.setItem("token", token);
+  
+          console.log("Token Gen", token);
+          alert(token)
+          this.router.navigate(['/about']);      
+         
+        } catch (error) {
+          console.error("Error generating or unsubscribing token:", error);
+        }
+      }, 2000);
     } else if (permission === "denied") {
       alert("You denied for the notification");
     }
