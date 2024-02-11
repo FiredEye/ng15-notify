@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import 'firebase/messaging';
-import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+// import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 // import { AngularFirestore } from '@angular/fire/compat/firestore';
 // import { collection, setDoc, doc} from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class NotifyService {
-  
-  constructor( private router: Router,private afMessaging: AngularFireMessaging) { }
+  // private afMessaging: AngularFireMessaging
+  constructor( private router: Router,) { }
 
   async requestnotifyPermission(){
     const permission = await Notification.requestPermission();
