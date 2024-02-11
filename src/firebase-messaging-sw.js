@@ -7,32 +7,41 @@ importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js");
 //   .then((response) => response.json())
 //   .then((data) => {
 //     config = data;
-    firebase.initializeApp({
-        apiKey: "AIzaSyCmW6Isd1XfaBOpxsp0or-mTIx0pLEijMA",
-        authDomain: "push-notify-b651d.firebaseapp.com",
-        projectId: "push-notify-b651d",
-        storageBucket: "push-notify-b651d.appspot.com",
-        messagingSenderId: "867556559896",
-        appId: "1:867556559896:web:6c58b0f6335f929377c76d"
-      });
-    if (firebase.messaging.isSupported()) {
-     const messaging = firebase.messaging();
-      messaging.setBackgroundMessageHandler((payload) => {
-        console.log(
-          "[firebase-messaging-sw.js] Received background message ",
-          payload
-        );
-        const notificationTitle = payload.notification.title;
-        const notificationOptions = {
-          body: payload.notification.body,
-          icon: payload.notification.image,
-        };
-      
-        self.registration.showNotification(notificationTitle, notificationOptions);
-      });
-    } else {
-        console.log("Browser not supported!");
-      }
+firebase.initializeApp({
+  apiKey: "AIzaSyCmW6Isd1XfaBOpxsp0or-mTIx0pLEijMA",
+  authDomain: "push-notify-b651d.firebaseapp.com",
+  projectId: "push-notify-b651d",
+  storageBucket: "push-notify-b651d.appspot.com",
+  messagingSenderId: "867556559896",
+  appId: "1:867556559896:web:6c58b0f6335f929377c76d",
+});
+if (firebase.messaging.isSupported()) {
+  const messaging = firebase.messaging();
+  messaging.setBackgroundMessageHandler((payload) => {
+    console.log(
+      "[firebase-messaging-sw.js] Received background message ",
+      payload
+    );
+    let notificationTitle = payload.data.title || "";
+    let notificationOptions = {
+      body: payload.data.body || "",
+      icon: "assets/icon.png",
+      data: payload.data,
+    };
+
+    // If notification object is present, update notification options
+    if (payload.notification) {
+      notificationTitle = payload.notification.title || "";
+      notificationOptions.body =
+        payload.notification.body || "";
+      notificationOptions.icon ="assets/icon.png";
+    }
+
+    self.registration.showNotification(notificationTitle, notificationOptions);
+  });
+} else {
+  console.log("Browser not supported!");
+}
 //   });
 
 // self.addEventListener('notificationclick', function(event) {
