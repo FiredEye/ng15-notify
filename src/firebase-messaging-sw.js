@@ -1,22 +1,22 @@
 importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");
 importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js");
-let config;
-let messaging;
+// let config;
+// let messaging;
 
-fetch("config/config.json")
-  .then((response) => response.json())
-  .then((data) => {
-    config = data;
+// fetch("config/config.json")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     config = data;
     firebase.initializeApp({
-      apiKey: config.firebaseConfig.apiKey,
-      authDomain: config.firebaseConfig.authDomain,
-      projectId: config.firebaseConfig.projectId,
-      storageBucket: config.firebaseConfig.storageBucket,
-      messagingSenderId: config.firebaseConfig.messagingSenderId,
-      appId: config.firebaseConfig.appId,
-    });
+        apiKey: "AIzaSyCmW6Isd1XfaBOpxsp0or-mTIx0pLEijMA",
+        authDomain: "push-notify-b651d.firebaseapp.com",
+        projectId: "push-notify-b651d",
+        storageBucket: "push-notify-b651d.appspot.com",
+        messagingSenderId: "867556559896",
+        appId: "1:867556559896:web:6c58b0f6335f929377c76d"
+      });
     if (firebase.messaging.isSupported()) {
-      messaging = firebase.messaging();
+     const messaging = firebase.messaging();
       messaging.setBackgroundMessageHandler((payload) => {
         console.log(
           "[firebase-messaging-sw.js] Received background message ",
@@ -33,7 +33,7 @@ fetch("config/config.json")
     } else {
         console.log("Browser not supported!");
       }
-  });
+//   });
 
 // self.addEventListener('notificationclick', function(event) {
 //     event.notification.close(); // Android needs explicit close.
