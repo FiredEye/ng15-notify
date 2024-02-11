@@ -2,7 +2,7 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
+// import { environment } from './environments/environment';
 // import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 // if (environment.production) {
