@@ -10,12 +10,12 @@ fetch('config/config.json')
   .then(data => {
       config = data;
       firebase.initializeApp({
-        apiKey: config.firebaseConfig.apiKey,
-        projectId: config.firebaseConfig.projectId,
+        // apiKey: config.firebaseConfig.apiKey,
+        // projectId: config.firebaseConfig.projectId,
         messagingSenderId: config.firebaseConfig.messagingSenderId,
-        appId: config.firebaseConfig.appId,
-        authDomain: config.firebaseConfig.authDomain,
-        storageBucket: config.firebaseConfig.storageBucket
+        // appId: config.firebaseConfig.appId,
+        // authDomain: config.firebaseConfig.authDomain,
+        // storageBucket: config.firebaseConfig.storageBucket
       });
       if(firebase.messaging.isSupported()) {
         messaging = firebase.messaging();
