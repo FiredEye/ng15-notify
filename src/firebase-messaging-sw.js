@@ -17,29 +17,18 @@ fetch("config/config.json")
     });
     if (firebase.messaging.isSupported()) {
       messaging = firebase.messaging();
-      messaging.setBackgroundMessageHandler(async function (payload) {
+      messaging.setBackgroundMessageHandler((payload) => {
         console.log(
           "[firebase-messaging-sw.js] Received background message ",
           payload
         );
-        // Customize notification here
-        let notificationTitle = payload.data.title || "Title";
-        let notificationOptions = {
-          body: payload.data.body || "",
-          icon: 'assets/icon.png',
-          data: payload.data,
+        const notificationTitle = payload.notification.title;
+        const notificationOptions = {
+          body: payload.notification.body,
+          icon: payload.notification.image,
         };
-
-        // If notification object is present, update notification options
-        if (payload.notification) {
-          notificationTitle = payload.notification.title || "";
-          notificationOptions.body =
-            payload.notification.body || "";
-          notificationOptions.icon ='assets/icon.png';
-        }
-
-                      return self.registration.showNotification(notificationTitle,
-                          notificationOptions);
+      
+        self.registration.showNotification(notificationTitle, notificationOptions);
       });
     } else {
         console.log("Browser not supported!");
