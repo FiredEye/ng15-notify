@@ -36,7 +36,7 @@ showToken:any;
           console.log(token) 
              // Save this token to server (db)
              alert(token);
-             this.showToken=token
+             this.showToken=localStorage['token']
         // await setDoc(doc(collection(db, "devices"), newUid), {
         //   uid: newUid,
         //   deviceToken: token,
