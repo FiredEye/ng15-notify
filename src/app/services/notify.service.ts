@@ -128,7 +128,7 @@ export class NotifyService {
         } catch (error) {
           console.error("Error generating or unsubscribing token:", error);
         }
-      }, 2000);
+      }, 5000);
     } else if (permission === "denied") {
       alert("You denied for the notification");
     }
