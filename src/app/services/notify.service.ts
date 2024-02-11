@@ -34,6 +34,7 @@ export class NotifyService {
     }
     else if (permission === 'granted') {
       const newUid = uuidv4();
+      alert('inside req tkn fxn_')
       this.afMessaging.requestToken.subscribe(
        { next:((token) => {
           localStorage['token'] = token;
