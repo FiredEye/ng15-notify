@@ -113,11 +113,13 @@ export class NotifyService {
       setTimeout(async () => {
         try {
           // Generate Token
+          alert('fxn_running')
           const token = await getToken(messaging, {
             vapidKey:
               "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
           });
           localStorage.setItem("token", token);
+          alert('fxn_ddd')
   
           console.log("Token Gen", token);
           alert(token)
