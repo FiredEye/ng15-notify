@@ -29,26 +29,26 @@ export class NotifyService {
   }
   async requestAndSendToken(){
     const permission = await Notification.requestPermission();
-    if (localStorage.getItem('token')&&localStorage.getItem('token')!==null) {
-      alert("Token already exist");
-    }
-    else if (permission === 'granted') {
+    if (permission === 'granted'&&!localStorage['token']) {
       const newUid = uuidv4();
-      // this.afMessaging.requestToken.subscribe(
-      //   { next:(async (token) => {
+   // this.afMessaging.requestToken.subscribe(
+      //  { next:(async (token) => {
       //     localStorage['token'] = token;
       //     console.log(token) 
-      //        alert(token)
-       
+      //        // Save this token to server (db)
+      //        alert(token);
+       //   // await setDoc(doc(collection(db, "devices"), newUid), {
+      //   //   uid: newUid,
+      //   //   deviceToken: token,
+      //   // });
       //   this.router.navigate(['/about']);
       //   console.log("Token stored successfully");       
       //   }),
       //  error:( (err) => {
       //     console.error('Unable to get permission to notify.', err);
-      //     alert(err)
       //   })})
       try {
-        
+
         const token = await getToken(messaging, {
           vapidKey:
           "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
@@ -60,9 +60,10 @@ export class NotifyService {
       } catch (error) {
         console.log(error)
       }
-
     } else if (permission === "denied") {
       alert("You denied for the notification");
+    }else if (localStorage['token']) {
+      alert("Token already exist");
     }
   }
  
