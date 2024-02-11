@@ -1,6 +1,6 @@
 
 import { Subscription } from 'rxjs';
-import { Component,  } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { NotifyService } from 'src/app/services/notify.service';
 
 
@@ -9,11 +9,16 @@ import { NotifyService } from 'src/app/services/notify.service';
   templateUrl: 'about.page.html',
   styleUrls: ['about.page.css'],
 })
-export class AboutPage{
+export class AboutPage implements OnInit{
 
-
+showToken:any;
   constructor(public notifyService:NotifyService){}
   requestNotification(){
     this.notifyService.requestnotifyPermission()
     }
+  ngOnInit(){
+    if(localStorage.getItem('token')){
+      this.showToken=localStorage['token']
+    }
+  }
 }
