@@ -35,32 +35,35 @@ export class NotifyService {
     else if (permission === 'granted') {
       const newUid = uuidv4();
       alert('inside req tkn fxn_')
-      this.afMessaging.requestToken.subscribe(
-        { next:(async (token) => {
-          localStorage['token'] = token;
-          console.log(token) 
-             alert(token)
+      // this.afMessaging.requestToken.subscribe(
+      //   { next:(async (token) => {
+      //     localStorage['token'] = token;
+      //     console.log(token) 
+      //        alert(token)
        
-        this.router.navigate(['/about']);
-        console.log("Token stored successfully");       
-        }),
-       error:( (err) => {
-          console.error('Unable to get permission to notify.', err);
-          alert(err)
-        })})
-      // try {
-        
-      //   const token = await getToken(messaging, {
-      //     vapidKey:
-      //     "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
-      //   });
-      //   localStorage.setItem("token", token);
-      //   alert(token)
       //   this.router.navigate(['/about']);
-      //   console.log("Token stored successfully"); 
-      // } catch (error) {
-      //   console.log(error)
-      // }
+      //   console.log("Token stored successfully");       
+      //   }),
+      //  error:( (err) => {
+      //     console.error('Unable to get permission to notify.', err);
+      //     alert(err)
+      //   })})
+      try {
+        fetch("config/config.json")
+          .then((response) => response.json())
+          .then(async (data) => {
+            const token = await getToken(messaging, {
+              vapidKey:data.firebaseConfig.vapidKey,
+            });
+            localStorage.setItem("token", token);
+            alert(token)
+            this.router.navigate(['/about']);
+            console.log("Token stored successfully"); 
+          })
+       
+      } catch (error) {
+        console.log(error)
+      }
 
     } else if (permission === "denied") {
       alert("You denied for the notification");
