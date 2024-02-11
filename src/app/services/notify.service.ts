@@ -36,22 +36,18 @@ export class NotifyService {
       const newUid = uuidv4();
       alert('inside req tkn fxn_')
       this.afMessaging.requestToken.subscribe(
-       (token) => {
+        { next:(async (token) => {
           localStorage['token'] = token;
           console.log(token) 
-             // Save this token to server (db)
-             alert(token);
-            
-        // await setDoc(doc(collection(db, "devices"), newUid), {
-        //   uid: newUid,
-        //   deviceToken: token,
-        // });
+             alert(token)
+       
         this.router.navigate(['/about']);
         console.log("Token stored successfully");       
-        },
-        (err) => {
+        }),
+       error:( (err) => {
           console.error('Unable to get permission to notify.', err);
-        })
+          alert(err)
+        })})
       // try {
         
       //   const token = await getToken(messaging, {
