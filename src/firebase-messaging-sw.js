@@ -7,7 +7,10 @@ fetch('config/config.json')
   .then(data => {
       config = data;
       firebase.initializeApp({       
-        messagingSenderId: config.firebaseConfig.messagingSenderId,       
+        apiKey: config.firebaseConfig.apiKey,
+        projectId: config.firebaseConfig.projectId,
+        messagingSenderId: config.firebaseConfig.messagingSenderId,
+        appId: config.firebaseConfig.appId  
       });
       if(firebase.messaging.isSupported()) {
         messaging = firebase.messaging();
