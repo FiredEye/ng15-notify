@@ -22,7 +22,7 @@ fetch("config/config.json")
           "[firebase-messaging-sw.js] Received background message ",
           payload
         );
-        //           // Customize notification here
+        // Customize notification here
         let notificationTitle = payload.data.title || "Title";
         let notificationOptions = {
           body: payload.data.body || "",
