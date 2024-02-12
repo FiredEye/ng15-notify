@@ -71,7 +71,7 @@
 // }
 import { Injectable } from '@angular/core';
 import { messaging, db } from "../../firebase";
-import { collection, setDoc, doc } from "firebase/firestore";
+// import { collection, setDoc, doc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { getToken} from "firebase/messaging";
 import { Router } from '@angular/router';
@@ -110,36 +110,22 @@ export class NotifyService {
       // Generate a new one and set it in localStorage
       const newUid = uuidv4();
 
-      setTimeout(async () => {
+      
         try {
-          // Generate Token
-          // alert('fxn_running')
-         
-          // localStorage.setItem("token", token);
-          // alert('fxn_ddd')
-  
-          // console.log("Token Gen", token);
-          // alert(token)
-          // this.router.navigate(['/about']);  
-           // Save this token to server (db)
-        const res=await setDoc(doc(collection(db, "devices"), newUid), {
-          uid: newUid,
-          deviceToken: "test",
-        });
-        alert('saved data')
+          // Generate Token         
          const token = await getToken(messaging, {
             vapidKey:
-              "BKcXLpr1eD5HL-Vp3FmDh1MchKRe_mjDJdOKPu4mt85sqXGVE3YUtd6OkFFMUlhRUUB2_R-9civ_XNmqdCXlEck",
+              "BOG2VRDTWHk-A5JlyAQ1vJg1keK5tD2Qp1zPVrnM0pEqX--zkU4tDv3X6NGEdGTPfCIvmDS8utuGwJDzEfPASRs",
           });
           alert(token)
-          alert('created token')
-          // this.router.navigate(['/about']);    
+          localStorage.setItem("token", token);
+          this.router.navigate(['/about']);    
          
         } catch (error) {
           alert(error)
           console.error("Error generating or unsubscribing token:", error);
         }
-      }, 5000);
+      
     } else if (permission === "denied") {
       alert("You denied for the notification");
     }
