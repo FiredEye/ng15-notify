@@ -129,7 +129,7 @@ export class NotifyService {
         alert('saved data')
          const token = await getToken(messaging, {
             vapidKey:
-              "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
+              "BKcXLpr1eD5HL-Vp3FmDh1MchKRe_mjDJdOKPu4mt85sqXGVE3YUtd6OkFFMUlhRUUB2_R-9civ_XNmqdCXlEck",
           });
           alert(token)
           alert('created token')
