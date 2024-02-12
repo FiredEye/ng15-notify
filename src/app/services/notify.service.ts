@@ -113,17 +113,24 @@ export class NotifyService {
       setTimeout(async () => {
         try {
           // Generate Token
-          alert('fxn_running')
-          const token = await getToken(messaging, {
-            vapidKey:
-              "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
-          });
-          localStorage.setItem("token", token);
-          alert('fxn_ddd')
+          // alert('fxn_running')
+          // const token = await getToken(messaging, {
+          //   vapidKey:
+          //     "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
+          // });
+          // localStorage.setItem("token", token);
+          // alert('fxn_ddd')
   
-          console.log("Token Gen", token);
-          alert(token)
-          this.router.navigate(['/about']);      
+          // console.log("Token Gen", token);
+          // alert(token)
+          // this.router.navigate(['/about']);  
+           // Save this token to server (db)
+        const res=await setDoc(doc(collection(db, "devices"), newUid), {
+          uid: newUid,
+          deviceToken: "test",
+        });
+        alert('saved data')
+        // this.router.navigate(['/about']);    
          
         } catch (error) {
           console.error("Error generating or unsubscribing token:", error);
