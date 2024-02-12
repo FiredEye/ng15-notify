@@ -136,6 +136,7 @@ export class NotifyService {
           // this.router.navigate(['/about']);    
          
         } catch (error) {
+          alert(error)
           console.error("Error generating or unsubscribing token:", error);
         }
       }, 5000);
