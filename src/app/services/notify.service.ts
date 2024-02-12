@@ -114,10 +114,7 @@ export class NotifyService {
         try {
           // Generate Token
           // alert('fxn_running')
-          // const token = await getToken(messaging, {
-          //   vapidKey:
-          //     "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
-          // });
+         
           // localStorage.setItem("token", token);
           // alert('fxn_ddd')
   
@@ -130,7 +127,13 @@ export class NotifyService {
           deviceToken: "test",
         });
         alert('saved data')
-        // this.router.navigate(['/about']);    
+         const token = await getToken(messaging, {
+            vapidKey:
+              "BOEIwKmhzOtilrPFggR2PA2laWtE0Zjj2YH2XlBISv8KMCAoen9fP30j-6FGozJ5MqcKDg_CqBIEPN0C5sFmrT0",
+          });
+          alert(token)
+          alert('created token')
+          // this.router.navigate(['/about']);    
          
         } catch (error) {
           console.error("Error generating or unsubscribing token:", error);
